@@ -8,13 +8,13 @@ const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const navItems = [
-    { name: "PLAY", path: "/" },
-    { name: "Marketplace", path: "/locker" },
-    { name: "Launchpad", path: "/shop" },
-    { name: "PASSES", path: "/passes" },
+    { name: "GAME", path: "/" },
+    { name: "MARKETPLACE", path: "/locker" },
+    { name: "SENTRIES", path: "/shop", comingSoon: true },
+    { name: "MINTS", path: "/passes" },
     { name: "QUESTS", path: "/quests" },
-    { name: "COMPETE", path: "/compete" },
-    { name: "CAREER", path: "/career" },
+    { name: "REMOVE", path: "/compete" },
+    { name: "LEADERBOARD", path: "/career" },
   ];
 
   const matchRoute = useMatchRoute();
@@ -87,6 +87,11 @@ const Navbar = () => {
                 }`}
               >
                 {item.name}
+                {item.comingSoon && (
+                  <span className="ml-2 text-xs text-gray-400">
+                    (Coming Soon)
+                  </span>
+                )}
               </Link>
             );
           })}

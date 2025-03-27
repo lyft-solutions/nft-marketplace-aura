@@ -1,11 +1,17 @@
 import { MetaData } from "@/types/meta";
 
 export const homeSlider = [
+  // {
+  //   id: 1,
+  //   type: "image",
+  //   title: "PLAY FORTNITE GO",
+  //   src: "/assets/image/fortnite-event-1.webp",
+  // },
   {
     id: 1,
-    type: "image",
-    title: "PLAY FORTNITE GO",
-    src: "/assets/image/fortnite-event-1.webp",
+    type: "video",
+    title: "DIVINITY",
+    src: "/assets/video/divinity.MP4",
   },
   {
     id: 2,
@@ -15,10 +21,16 @@ export const homeSlider = [
   },
   {
     id: 3,
-    type: "image",
-    title: "NEW SKINS",
-    src: "/assets/image/fortnite-event-2.jpg",
+    type: "video",
+    title: "COMPANIONS",
+    src: "/assets/video/companions.MP4",
   },
+  // {
+  //   id: 3,
+  //   type: "image",
+  //   title: "NEW SKINS",
+  //   src: "/assets/image/fortnite-event-2.jpg",
+  // },
 ];
 
 export const homeMeta: MetaData = {
