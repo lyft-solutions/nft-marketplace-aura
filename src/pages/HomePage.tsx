@@ -9,14 +9,14 @@ import { Meta, SafeAreaWrapper } from "@/components/atoms";
 import { homeMeta } from "@/data/home";
 
 const HomePage = () => {
-  const [gameMode, setGameMode] = useState("BATTLE ROYALE");
+  const [gameMode, setGameMode] = useState("PLAY GAME");
   const [ranked, setRanked] = useState(false);
   const [solo, setSolo] = useState(true);
 
   return (
     <>
       <Meta meta={homeMeta} />
-      <div className="relative h-[100vh] w-full overflow-hidden bg-[url(/assets/image/theme-2.webp)] bg-cover bg-center">
+      <div className="relative h-[100vh] w-full overflow-hidden bg-[url(/assets/image/background1.jpg)] bg-cover bg-center">
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/5 to-black/60"></div>
         <SafeAreaWrapper>
           <div className="h-full flex flex-col md:flex-row mt-3">
