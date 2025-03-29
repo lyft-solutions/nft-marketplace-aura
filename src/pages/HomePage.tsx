@@ -7,6 +7,8 @@ import {
 } from "@/components/pages/home";
 import { Meta, SafeAreaWrapper } from "@/components/atoms";
 import { homeMeta } from "@/data/home";
+import { Canvas } from "@react-three/fiber";
+import CharacterScene from "@/components/pages/home/CharacterScene";
 
 const HomePage = () => {
   const [gameMode, setGameMode] = useState("PLAY GAME");
@@ -30,7 +32,7 @@ const HomePage = () => {
               />
             </div>
             <div className="flex-1 flex items-center justify-center character-outer-container">
-              <CharacterDisplay username="God killer" />
+              <CharacterScene />
             </div>
             <div className="hidden md:block w-1/4"></div>
           </div>

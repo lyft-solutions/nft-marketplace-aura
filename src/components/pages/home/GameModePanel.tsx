@@ -17,6 +17,9 @@ const StatusText: React.FC<{
   </div>
 );
 
+const downloadLink =
+  "https://drive.google.com/file/d/1jI183eLe88lQUlrED8x4tNfFzMGgW_wx/view";
+
 const GameModePanel: React.FC<GameModePanelProps> = ({
   gameMode,
   ranked,
@@ -41,7 +44,7 @@ const GameModePanel: React.FC<GameModePanelProps> = ({
         <div className="text-white font-bold text-lg md:text-3xl tracking-wide text-center uppercase">
           {gameMode}
         </div>
-{/* 
+        {/* 
         <div className="rounded-xl p-1 bg-pink-400/80 mt-2 md:mt-6 mb-4 shadow-md">
           <StatusText
             label="RANKED:"
@@ -56,12 +59,16 @@ const GameModePanel: React.FC<GameModePanelProps> = ({
         </div> */}
 
         <motion.button
-          className="bg-yellow-400 hover:bg-yellow-500 text-white py-2 md:py-4 rounded-xl font-bold text-lg md:text-xl tracking-wide w-full transition-all shadow-md"
+          className="relative bg-yellow-400 hover:bg-yellow-500 text-white py-2 md:py-4 rounded-xl font-bold text-lg md:text-xl tracking-wide w-full transition-all shadow-md mt-3 cursor-pointer"
           whileHover={{
             scale: 1.05,
             boxShadow: "0px 0px 10px rgba(255, 215, 0, 0.6)",
           }}
           whileTap={{ scale: 0.95 }}
+          onClick={() => {
+            console.log("I am not able to click")
+            window.open(downloadLink, "_blank");
+          }}
         >
           PLAY
         </motion.button>

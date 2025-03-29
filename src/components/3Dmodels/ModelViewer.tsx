@@ -1,53 +1,52 @@
-import React, { Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
-import {
-  OrbitControls,
-  PerspectiveCamera,
-  Environment,
-  useGLTF,
-} from "@react-three/drei";
+import { useEffect, useRef } from "react";
+import { useLoader, useFrame } from "@react-three/fiber";
+import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
+import { TextureLoader, AnimationMixer, MeshStandardMaterial } from "three";
 
-function Character() {
-  const { scene } = useGLTF("assets/models/sample.glb");
-
-  return <primitive object={scene} scale={4.8} />;
+interface Props {
+  folder: string;
+  file: string;
+  textures?: any;
 }
 
-export default function CharacterViewer() {
+export default function ModelViewer({ folder, file, textures = {} }: Props) {
+  const group = useRef(null);
+  const model = useLoader(FBXLoader, `/models/${folder}/${file}`);
+  const mixer = useRef<AnimationMixer>(null);
+  const textureLoader = new TextureLoader();
+  const loadedTextures: any = {};
+
+  Object.entries(textures).forEach(([key, textureFile]) => {
+    loadedTextures[key] = textureLoader.load(
+      `/models/${folder}/${textureFile}`
+    );
+  });
+
+  useEffect(() => {
+    model.traverse((child: any) => {
+      if (child.isMesh) {
+        child.material = new MeshStandardMaterial({ ...loadedTextures });
+        child.castShadow = true;
+      }
+    });
+
+    if (model.animations.length > 0) {
+      mixer.current = new AnimationMixer(model);
+      const action = mixer.current.clipAction(model.animations[0]);
+      action?.play();
+    }
+
+    model.position.set(0, -0.8, 0);
+    model.rotation.y = Math.PI;
+  }, [model]);
+
+  useFrame((_, delta) => {
+    mixer.current?.update(delta);
+  });
+
   return (
-    <div className="w-full h-full">
-      <Canvas
-        style={{ width: '100%', height: '100%' }}
-        camera={{ position: [0, 2, 6], fov: 50, near: 0.1, far: 1000 }}
-      >
-        <Suspense fallback={null}>
-          <ambientLight intensity={2.0} />
-
-          <directionalLight
-            position={[5, 5, 5]}
-            intensity={2.0}
-            castShadow={false}
-            shadow-mapSize-width={1024}
-            shadow-mapSize-height={1024}
-          />
-
-          <pointLight position={[-5, 5, 5]} intensity={1.5} />
-          <Environment preset="studio" />
-
-          <Character />
-
-          <OrbitControls
-            enableZoom={false}
-            enablePan={false}
-            minPolarAngle={Math.PI / 2}
-            maxPolarAngle={Math.PI / 2}
-            minAzimuthAngle={-Math.PI / 2}
-            maxAzimuthAngle={Math.PI / 2}
-          />
-          <PerspectiveCamera makeDefault position={[0, 2, 5]} />
-        </Suspense>
-      </Canvas>
-    </div>
+    <group ref={group}>
+      <primitive object={model} scale={0.007} />
+    </group>
   );
 }
-

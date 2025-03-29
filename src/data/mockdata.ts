@@ -1,7 +1,6 @@
-
 const generatePunkTraits = () => {
-  const types = ["Male", "Female", "Zombie", "Ape", "Alien"]
-  const typeWeights = [0.6, 0.3, 0.05, 0.04, 0.01]
+  const types = ["Male", "Female", "Zombie", "Ape", "Alien"];
+  const typeWeights = [0.6, 0.3, 0.05, 0.04, 0.01];
 
   const accessories: string[] = [
     "Earring",
@@ -29,57 +28,59 @@ const generatePunkTraits = () => {
     "Do-rag",
     "Shaved Head",
     "Peak Spike",
-  ]
+  ];
 
-  const backgrounds = ["Blue", "Purple", "Orange", "Green", "Red", "Black"]
+  const backgrounds = ["Blue", "Purple", "Orange", "Green", "Red", "Black"];
 
   const randomType = () => {
-    const rand = Math.random()
-    let sum = 0
+    const rand = Math.random();
+    let sum = 0;
     for (let i = 0; i < typeWeights.length; i++) {
-      sum += typeWeights[i]
-      if (rand < sum) return types[i]
+      sum += typeWeights[i];
+      if (rand < sum) return types[i];
     }
-    return types[0]
-  }
+    return types[0];
+  };
 
-  const numAccessories = Math.floor(Math.random() * 3) + 1
+  const numAccessories = Math.floor(Math.random() * 3) + 1;
   const selectedAccessories: string[] = [];
   for (let i = 0; i < numAccessories; i++) {
-    const accessory = accessories[Math.floor(Math.random() * accessories.length)]
+    const accessory =
+      accessories[Math.floor(Math.random() * accessories.length)];
     if (!selectedAccessories.includes(accessory)) {
-      selectedAccessories.push(accessory)
+      selectedAccessories.push(accessory);
     }
   }
 
-  const type = randomType()
-  const background = backgrounds[Math.floor(Math.random() * backgrounds.length)]
+  const type = randomType();
+  const background =
+    backgrounds[Math.floor(Math.random() * backgrounds.length)];
 
   return {
     type,
     background,
     accessories: selectedAccessories.join(", "),
-  }
-}
+  };
+};
 
 const generatePriceData = () => {
-  const basePrice = 38 + (Math.random() * 4 - 2)
-  const lastPrice = basePrice * (0.85 + Math.random() * 0.3)
+  const basePrice = 38 + (Math.random() * 4 - 2);
+  const lastPrice = basePrice * (0.85 + Math.random() * 0.3);
 
   return {
     price: Number.parseFloat(basePrice.toFixed(2)),
     lastPrice: Number.parseFloat(lastPrice.toFixed(2)),
-  }
-}
+  };
+};
 
 export const punksData: any = Array.from({ length: 100 }).map((_, index) => {
-  const tokenId = String(index + 1).padStart(4, "0")
-  const traits = generatePunkTraits()
-  const prices = generatePriceData()
-  const rarityRank = Math.floor(Math.random() * 10000)
+  const tokenId = String(index + 1).padStart(4, "0");
+  const traits = generatePunkTraits();
+  const prices = generatePriceData();
+  const rarityRank = Math.floor(Math.random() * 10000);
 
-  const randomDate = new Date()
-  randomDate.setDate(randomDate.getDate() - Math.floor(Math.random() * 30))
+  const randomDate = new Date();
+  randomDate.setDate(randomDate.getDate() - Math.floor(Math.random() * 30));
 
   return {
     id: `punk-${tokenId}`,
@@ -99,18 +100,63 @@ export const punksData: any = Array.from({ length: 100 }).map((_, index) => {
       from: `0x${Math.random().toString(16).substring(2, 14)}`,
       to: `0x${Math.random().toString(16).substring(2, 14)}`,
     },
-  }
-})
+  };
+});
 
-punksData[0].price = 90.39
-punksData[0].rarityRank = 1
-punksData[0].traits.type = "Alien"
+punksData[0].price = 90.39;
+punksData[0].rarityRank = 1;
+punksData[0].traits.type = "Alien";
 
-punksData[1].price = 72.5
-punksData[1].rarityRank = 5
-punksData[1].traits.type = "Ape"
+punksData[1].price = 72.5;
+punksData[1].rarityRank = 5;
+punksData[1].traits.type = "Ape";
 
-punksData[2].price = 65.8
-punksData[2].rarityRank = 12
-punksData[2].traits.type = "Zombie"
+punksData[2].price = 65.8;
+punksData[2].rarityRank = 12;
+punksData[2].traits.type = "Zombie";
 
+export const characters = [
+  {
+    id: "blue_robot",
+    name: "Blue Robot",
+    file: "Blue_Rig_Fixed.fbx",
+    folder: "Blue_Robot",
+    textures: {
+      map: "Combined_Diffuse.png",
+      normalMap: "Combined_Normal.png",
+      roughnessMap: "Combined_Roughness.png",
+      metalnessMap: "Combined_metallic.png",
+    },
+  },
+  {
+    id: "future_mummy",
+    name: "Mummy X",
+    file: "Mummy_Character_Rig_Fix.fbx",
+    folder: "Future_Mummy",
+    textures: {
+      map: "Textures_Base_color.png",
+      normalMap: "Textures_Normal_OpenGL.png",
+      roughnessMap: "Textures_Roughness.png",
+      metalnessMap: "Textures_Metallic.png",
+    },
+  },
+  {
+    id: "future_warrior",
+    name: "Warrior Z",
+    file: "Warrior_Rig_Fixed.fbx",
+    folder: "Future_Warrior",
+    textures: {
+      map: "Material.003_Base_color.png",
+      normalMap: "Material.003_Normal_OpenGL.png",
+      roughnessMap: "Material.003_Roughness.png",
+      metalnessMap: "Material.003_Metallic.png",
+    },
+  },
+  {
+    id: "golden_character",
+    name: "Golden Legend",
+    file: "Golden_Rigged.fbx",
+    folder: "Golden_Character",
+    textures: {}, 
+  },
+];
