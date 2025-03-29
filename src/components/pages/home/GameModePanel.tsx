@@ -40,7 +40,7 @@ const GameModePanel: React.FC<GameModePanelProps> = ({
         <HomeSlider />
       </div>
 
-      <div className="bg-black/40 backdrop-blur-lg p-3 md:p-6 md:py-8 rounded-xl shadow-lg absolute bottom-3 w-full hidden md:block">
+      <div className="bg-black/40 backdrop-blur-lg p-3 md:p-6 md:py-8 rounded-xl shadow-lg absolute bottom-3 w-full hidden md:block z-20">
         <div className="text-white font-bold text-lg md:text-3xl tracking-wide text-center uppercase">
           {gameMode}
         </div>
