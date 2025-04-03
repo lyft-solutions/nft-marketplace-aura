@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Link, useMatchRoute } from "@tanstack/react-router";
 import { Search, Menu, X, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useWalletAuth } from "@/context/WalletAuthContext";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const { loginWallet, logoutWallet, isLoggedIn, balance, address, currentNetwork } = useWalletAuth()
 
   const navItems = [
     { name: "GAME", path: "/" },
@@ -80,11 +82,10 @@ const Navbar = () => {
               <Link
                 key={item.name}
                 to={item.path}
-                className={`px-3 py-1.5 rounded-[8px] text-sm font-bold transition-colors ${
-                  isActive
+                className={`px-3 py-1.5 rounded-[8px] text-sm font-bold transition-colors ${isActive
                     ? "bg-pink-600 text-white"
                     : "text-white hover:bg-white/10"
-                }`}
+                  }`}
               >
                 {item.name}
                 {item.comingSoon && (
@@ -98,30 +99,50 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center space-x-4">
-          <div className="flex items-center">
-            <span className={"text-white font-bold"}>3,150</span>
-          </div>
-          <div className="relative">
-            <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
-              <span className="text-white font-bold">1</span>
-            </div>
-          </div>
-          <div className="w-12 h-12 rounded-full relative">
-            <img
-              src="assets/image/fortnite-event-1.webp"
-              alt="CryptoPunks"
-              className="w-full h-full object-cover rounded-full"
-            />
-            <div className="bg-purple-500 p-1 rounded-full absolute top-[-5px] right-[-4px]">
-              <svg className="w-3 h-3 text-white" viewBox="0 0 24 24">
-                <path
-                  fill="currentColor"
-                  d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+          {!isLoggedIn && (
+            <Link
+              to={'/'}
+              onClick={loginWallet}
+              className={`px-3 py-1.5 rounded-[8px] text-sm font-bold transition-colors bg-blue-600 text-white`}
+            >
+              SignIn
+            </Link>
+          )}
+          {isLoggedIn &&
+            <>
+              <div className="flex items-center">
+                <span className={"text-white font-bold"}>{balance} {currentNetwork?.nativeCurrency?.symbol}</span>
+              </div>
+              <div className="relative">
+                <div className="h-8 bg-blue-500 rounded-[8px] p-2 flex items-center justify-center">
+                  <span className="text-white font-bold">{address?.substring(0, 7) + "..."}</span>
+                </div>
+              </div>
+              <Link
+                to={'/'}
+                onClick={logoutWallet}
+                className={`px-3 py-1.5 rounded-[8px] text-sm font-bold transition-colors bg-blue-600 text-white`}
+              >
+                Logout
+              </Link>
+              {/* <div className="w-12 h-12 rounded-full relative">
+                <img
+                  src="assets/image/fortnite-event-1.webp"
+                  alt="CryptoPunks"
+                  className="w-full h-full object-cover rounded-full"
                 />
-              </svg>
-            </div>
-            <div className="w-3 h-3 rounded-full bg-green-400 absolute animate-pulse bottom-[2px] right-1"></div>
-          </div>
+                <div className="bg-purple-500 p-1 rounded-full absolute top-[-5px] right-[-4px]">
+                  <svg className="w-3 h-3 text-white" viewBox="0 0 24 24">
+                    <path
+                      fill="currentColor"
+                      d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                    />
+                  </svg>
+                </div>
+                <div className="w-3 h-3 rounded-full bg-green-400 absolute animate-pulse bottom-[2px] right-1"></div>
+              </div> */}
+            </>
+          }
         </div>
       </div>
 
@@ -187,11 +208,10 @@ const Navbar = () => {
                     <Link
                       key={item.name}
                       to={item.path}
-                      className={`px-4 py-2 rounded-[4px] text-sm font-bold transition-colors w-full ${
-                        isActive
+                      className={`px-4 py-2 rounded-[4px] text-sm font-bold transition-colors w-full ${isActive
                           ? "bg-pink-600 text-white"
                           : "text-white hover:bg-white/10"
-                      }`}
+                        }`}
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {item.name}

@@ -9,13 +9,19 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./index.css";
 import { HelmetProvider } from "react-helmet-async";
+import DymanicWallet from "./DymanicWallet";
+import { WalletAuthProvider } from "./context/WalletAuthContext";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
-          <RouterProvider router={router} />
+          <DymanicWallet>
+            <WalletAuthProvider>
+              <RouterProvider router={router} />
+            </WalletAuthProvider>
+          </DymanicWallet>
         </ThemeProvider>
       </QueryClientProvider>
     </HelmetProvider>
